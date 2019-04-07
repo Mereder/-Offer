@@ -7,7 +7,7 @@ public class mergeSortedList {
             this.val = val;
         }
     }
-    
+
     public ListNode Merge(ListNode list1,ListNode list2) {
         if(list1 == null && list2 == null) return null;
         if(list1 == null && list2 != null) return list2;
