@@ -2,11 +2,11 @@ public class VerifySquenceOfBST {
     public boolean VerifySquenceOfBST(int [] sequence) {
         int n = sequence.length;
         if(n <= 0 && sequence == null ) return false;
-        return helper(sequence,0,n-1,n);
+        return helper(sequence,0,n-1);
     }
 
-    public boolean helper(int []sequence,int lo ,int hi,int length){
-        if (length <= 0 ) return  false;
+    public boolean helper(int []sequence,int lo ,int hi){
+        if (lo >= hi ) return  true;
         int root = sequence[hi];
         int i = lo;
         while (i < hi){
@@ -18,14 +18,12 @@ public class VerifySquenceOfBST {
             if (sequence[j] < root) return false;
             j++;
         }
-        boolean left = true;
-        if (i < hi){
-            left = helper(sequence,lo,j-1,j-i);
-        }
-        boolean right = true;
-        if(j < hi){
-            right = helper(sequence,j,hi,length-i-1);
-        }
-        return (left && right);
+
+        return helper(sequence,lo,i-1) && helper(sequence,i,hi-1);
+    }
+
+    public static void main(String[] args) {
+        int test[] =  {3,7,5,18,15,10};
+        new VerifySquenceOfBST().VerifySquenceOfBST(test);
     }
 }
