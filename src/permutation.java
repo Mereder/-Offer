@@ -1,65 +1,47 @@
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Scanner;
+import java.util.*;
 
 public class permutation {
-    public static ArrayList<String> result = new ArrayList<String>();
-    public static HashSet<String> set = new HashSet<String>();
-
-    /**
-     * 主函数入口
-     *
-     * @param args
-     */
     public static void main(String[] args) {
-        System.out.println("请随意输入一串字符串：");
-        String inputString = new Scanner(System.in).next().toString();
-        ArrayList<String> result = Permutation(inputString);
-        for (int i = 0; i < result.size(); i++) {
-            System.out.println(result.get(i));
-        }
-    }
+        String str = "abc";
 
-    /**
-     * 递归函数主入口
-     *
-     * @param str
-     * @return
-     */
-    public static ArrayList<String> Permutation(String str) {
-        if (str == null || str.length() == 0)
-            return result;
-        else
-            Permutation(str, 0, str.length() - 1);
-        result.addAll(set);
+        for (String a:new permutation().Permutation(str)
+             ) {
+            System.out.println(a);
+        }
+
+    }
+    public TreeSet<String> treeSet = new TreeSet<>();
+    public ArrayList<String> Permutation(String str) {
+        ArrayList<String> result = new ArrayList<>();
+        if( str == null) return result;
+        int n = str.length();
+        TreeSet<String> set = new TreeSet<>();
+        char[] chars = str.toCharArray();
+        permutation(chars,0);
+        result.addAll(treeSet);
         return result;
     }
 
-    /**
-     * 递归条件函数
-     *
-     * @param str
-     * @param start
-     * @param end
-     */
-    public static void Permutation(String str, int start, int end) {
-        char[] array = str.toCharArray();
-        String r = null;
-        if (start == end) {
-            r = String.valueOf(array);
-            set.add(r);
-        } else {
-            for (int i = start; i <= end; i++) {
-                char tmp = array[start];
-                array[start] = array[i];
-                array[i] = tmp;
 
-                Permutation(String.valueOf(array), start + 1, array.length - 1);
+    public void permutation(char[] chs,int i){
+        if(chs == null || i<0 || i>chs.length-1) return;
+        if(i == chs.length-1){
+            treeSet.add(String.valueOf(chs));
+        }
+        else{
+            for(int j =i;j<chs.length;j++){
+                swap(chs,i,j);
 
-                tmp = array[start];
-                array[start] = array[i];
-                array[i] = tmp;
+                permutation(chs,i+1);
+
+                swap(chs,i,j);
             }
         }
+
+    }
+    public void swap(char[] chs,int i,int j){
+        char temp = chs[i];
+        chs[i] = chs[j];
+        chs[j] = temp;
     }
 }
